@@ -1,12 +1,13 @@
 
 import './App.css'
+import Root from './components/Root'
 
 function App() {
 
 
   return (
     <div>
-      <h1>I am from Program shikhbo platform</h1>
+      <Root></Root>
     </div>
   )
 }

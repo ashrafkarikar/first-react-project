@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 const Navbar = () => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [activeLink, setActiveLink] = useState('/');
+    const location = useLocation();
+
+    useEffect (() => {
+        setActiveLink(location.pathname || '/')
+    }, [location.pathname]);
 
     const toggleMenu = () =>{
         setIsOpen(!isOpen)
+    }
+
+    const handleLinkClick = (path) => {
+        setActiveLink (path);
     }
 
     return (
@@ -30,11 +40,13 @@ const Navbar = () => {
                 </div>
 
                 <ul className="hidden md:flex space-x-4 md:space-x-6">
-                    <li> <Link to={'/'} className="hover:text-green-400"> Home </Link> </li>
-                    <li> <Link to={'products'} className="hover:text-green-400"> Profucts </Link> </li>
-                    <li> <Link to={'blogs'} className="hover:text-green-400"> Blogs </Link> </li>
-                    <li> <Link to={'contact'} className="hover:text-green-400"> Contact </Link> </li>
-                    <li> <Link to={'about'} className="hover:text-green-400"> About Us </Link> </li>
+                    <li> 
+                        <Link to={'/'} onClick={() => handleLinkClick('/')} className={`${activeLink === '/' ? 'text-red-600' : 'hover:text-green-300'}`}> Home </Link> 
+                    </li>
+                    <li> <Link to={'/products'} onClick={() => handleLinkClick('/products')} className={`${activeLink === '/products' ? 'text-red-600' : 'hover:text-green-300'}`}> Profucts </Link> </li>
+                    <li> <Link to={'/blogs'} onClick={() => handleLinkClick('/blogs')} className={`${activeLink === '/blogs' ? 'text-red-600' : 'hover:text-green-300'}`}> Blogs </Link> </li>
+                    <li> <Link to={'/contact'} onClick={() => handleLinkClick('/contact')} className={`${activeLink === '/contact' ? 'text-red-600' : 'hover:text-green-300'}`}> Contact </Link> </li>
+                    <li> <Link to={'/about'} onClick={() => handleLinkClick('/about')} className={`${activeLink === '/about' ? 'text-red-600' : 'hover:text-green-300'}`}> About Us </Link> </li>
                 </ul>
 
                     <button className="hidden md:block bg-white text-black py-1 px-5 rounded cursor-pointer hover:bg-slate-400">Login</button>
